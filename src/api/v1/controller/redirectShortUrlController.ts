@@ -1,10 +1,15 @@
-import urlDatabase from '@/utils/database';
+import { getLongUrl } from "@/api/v1/models";
 
-const redirectShortUrl = (shortCode: string) => {
-  const longUrl = urlDatabase.get(shortCode);
-
-  if (longUrl) return { status: 200, url: longUrl }
-  else return { status: 404, error: 'URL not found' }
+const redirectShortUrl = async (shortCode: string) => {
+  try {
+    const findByLongUrl = await getLongUrl(shortCode);
+    if (findByLongUrl) return { status: 200, url: findByLongUrl.long_url }
+    
+    return { status: 404, error: 'URL not found' }
+  } catch (error) {
+    console.error(error);
+    return {status: 500, error: 'Internal server error' };
+  }
 }
 
 export default redirectShortUrl;

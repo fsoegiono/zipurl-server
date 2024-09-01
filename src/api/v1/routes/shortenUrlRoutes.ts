@@ -5,9 +5,9 @@ import { ShortenUrlBodyRequest, ShortenUrlResponse } from '@/api/v1/interfaces';
 
 const router: Router = express.Router();
 
-router.post('/shorten', (req: Request<{}, {}, ShortenUrlBodyRequest>, res: Response<ShortenUrlResponse>) => {
+router.post('/shorten', async (req: Request<{}, {}, ShortenUrlBodyRequest>, res: Response<ShortenUrlResponse>) => {
   const { body: { longUrl }} = req;
-  const { status, error, shortUrl } = shortenUrlController(longUrl);
+  const { status, error, shortUrl } = await shortenUrlController(longUrl);
 
   if (error) res.status(status).json({ error });
   res.json({ shortUrl });

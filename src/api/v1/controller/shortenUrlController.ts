@@ -2,27 +2,31 @@ import cuid from 'cuid'; // high collision resistance, shorter than uuid npm pac
 import validUrl from 'valid-url';
 
 import { baseUrl } from '@/config';
-import urlDatabase from '@/utils/database';
+import { getShortUrlCode, insertShortenUrl } from '@/api/v1/models';
 
-const createShortenUrl = (longUrl: string) => {
-  if (!validUrl.isUri(longUrl)) {
-    return {
-      status: 400,
-      error: 'Invalid URL',
+const createShortenUrl = async (longUrl: string) => {
+  try {
+    if (!validUrl.isUri(longUrl)) {
+      return {
+        status: 400,
+        error: 'Invalid URL',
+      }
     }
+
+    const shortUrl = `${baseUrl}/`;
+    const url = longUrl.slice(-1) !== '/' ? longUrl + '/' : longUrl;
+
+    const findByShortUrlCode = await getShortUrlCode(url);
+    if (findByShortUrlCode) return { status: 200, shortUrl: shortUrl + findByShortUrlCode.short_code };
+
+    const shortCode = cuid();
+    const newUrl = await insertShortenUrl(url, shortCode);
+
+    return { status: 200, shortUrl: shortUrl + newUrl.short_code };
+  } catch (error) {
+    console.error(error);
+    return {status: 500, error: 'Internal server error' };
   }
-
-  const shortUrl = `${baseUrl}/`;
-  const url = longUrl.slice(-1) !== '/' ? longUrl + '/' : longUrl;
-
-  for (const [key, value] of urlDatabase.entries()) {
-    if (value === url) return { status: 200, shortUrl: shortUrl + key };
-  }
-
-  const shortCode = cuid();
-  urlDatabase.set(shortCode, url);
-
-  return { status: 200, shortUrl: shortUrl + shortCode };
 }
 
 export default createShortenUrl;
