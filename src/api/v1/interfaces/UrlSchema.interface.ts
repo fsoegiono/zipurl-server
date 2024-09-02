@@ -1,8 +1,11 @@
+import { ObjectId } from 'mongodb';
+
 interface UrlSchema {
-  id: string;
-  long_url: string;
-  short_code: string;
-  created_at: Date;
+  _id?: ObjectId;
+  longUrl: string;
+  shortCode: string;
+  createdAt: Date;
+  lastSeen: Date;
 }
 
 export default UrlSchema;

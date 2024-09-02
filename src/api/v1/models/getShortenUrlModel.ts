@@ -1,16 +1,24 @@
-import { pool } from '@/config';
+import { getCollection } from '@/utils/database';
 import { UrlSchema } from '@/api/v1/interfaces';
 
-const getLongUrl = async (shortCode: string): Promise<UrlSchema | null> => {
-  const query = 'SELECT long_url FROM urls WHERE short_code = $1';
-  const result = await pool.query(query, [shortCode]);
-  return result?.rows[0] || null;
+const db = getCollection();
+
+const getLongUrl = async (shortCode: string): Promise<UrlSchema | null>  => {
+  return db.findOneAndUpdate(
+    { shortCode },
+    { 
+      $currentDate: { lastSeenAt: true }
+    }
+  );
 }
 
 const getShortUrlCode = async (longUrl: string): Promise<UrlSchema | null> => {
-  const query = 'SELECT short_code FROM urls WHERE long_url = $1';
-  const result = await pool.query(query, [longUrl]);
-  return result?.rows[0] || null;
+  return db.findOneAndUpdate(
+    { longUrl },
+    { 
+      $currentDate: { lastSeen: true }
+    }
+  );
 }
 
 export {

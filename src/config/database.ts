@@ -1,11 +1,6 @@
-import { Pool } from 'pg';
+import { MongoClient } from 'mongodb';
 
-const pool = new Pool({
-  user: process.env.DB_USER || 'admin',
-  host: process.env.DB_HOST || 'localhost',
-  database: process.env.DB_NAME || 'ShortenUrl',
-  password: process.env.DB_PASSWORD || 'password',
-  port: parseInt(process.env.DB_PORT || '5432'),
-});
+const mongoDbUri = process.env.MONGODB_URI || 'mongodb://localhost:27017/';
+const databaseClient = new MongoClient(mongoDbUri);
 
-export default pool;
+export default databaseClient;

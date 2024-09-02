@@ -17,12 +17,12 @@ const createShortenUrl = async (longUrl: string) => {
     const url = longUrl.slice(-1) !== '/' ? longUrl + '/' : longUrl;
 
     const findByShortUrlCode = await getShortUrlCode(url);
-    if (findByShortUrlCode) return { status: 200, shortUrl: shortUrl + findByShortUrlCode.short_code };
+    if (findByShortUrlCode) return { status: 200, shortUrl: shortUrl + findByShortUrlCode.shortCode };
 
     const shortCode = cuid();
     const newUrl = await insertShortenUrl(url, shortCode);
 
-    return { status: 200, shortUrl: shortUrl + newUrl.short_code };
+    return { status: 200, shortUrl: shortUrl + newUrl.shortCode };
   } catch (error) {
     console.error(error);
     return {status: 500, error: 'Internal server error' };

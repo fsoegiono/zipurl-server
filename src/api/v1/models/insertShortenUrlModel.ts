@@ -1,15 +1,21 @@
-import { pool } from '@/config';
+import { getCollection } from '@/utils/database';
 import { UrlSchema } from '@/api/v1/interfaces';
 
+const db = getCollection();
+
 const insertShortenUrl = async (longUrl: string, shortCode: string): Promise<UrlSchema> => {
-  const query = `
-    INSERT INTO urls (long_url, short_code)
-    VALUES ($1, $2)
-    RETURNING *
-  `;
-  const values = [longUrl, shortCode];
-  const result = await pool.query(query, values);
-  return result.rows[0];
+  const newUrl: UrlSchema = {
+    longUrl,
+    shortCode,
+    createdAt: new Date(),
+    lastSeen: new Date()
+  };
+
+  const result = await db.insertOne(newUrl);
+
+  if (!result.acknowledged) throw new Error('Failed to insert shorten url.');
+
+  return { ...newUrl, _id: result.insertedId };
 }
 
 export default insertShortenUrl;

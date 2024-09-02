@@ -1,6 +1,6 @@
 import { CorsOptions } from "cors";
 
-import pool from "@/config/database";
+import databaseClient from "@/config/database";
 
 const port = process.env.PORT || 8080;
 const baseUrl = process.env.BASE_URL || `http://localhost:${port}`;
@@ -24,5 +24,5 @@ export {
   baseUrl,
   allowedOrigin,
   corsOptions,
-  pool
+  databaseClient
 }

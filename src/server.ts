@@ -1,13 +1,11 @@
-import http from 'http';
-import app from '@/app';
 import { port, baseUrl } from '@/config';
 import { connectDB, disconnectDB } from '@/utils/database';
-
-const server = http.createServer(app);
 
 async function startServer() {
   try {
     await connectDB();
+
+    const { default: app } = await import('@/app');
     
     const server = app.listen(port, () => {
       console.log(`Server is running on ${baseUrl}`);

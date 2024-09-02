@@ -3,7 +3,8 @@ import { getLongUrl } from "@/api/v1/models";
 const redirectShortUrl = async (shortCode: string) => {
   try {
     const findByLongUrl = await getLongUrl(shortCode);
-    if (findByLongUrl) return { status: 200, url: findByLongUrl.long_url }
+
+    if (findByLongUrl) return { status: 200, url: findByLongUrl.longUrl }
     
     return { status: 404, error: 'URL not found' }
   } catch (error) {
