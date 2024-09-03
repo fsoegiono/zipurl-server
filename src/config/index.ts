@@ -9,9 +9,6 @@ const corsOptions: CorsOptions = {
   origin: (originUrl, callback) => {
     // Check if the request origin matches the allowed origin
     // In dev mode, 'origin' might be undefined for same-origin requests
-    console.log('originUrl', originUrl);
-    console.log('allowedOrigin', process.env.ALLOWED_ORIGIN);
-    console.log(originUrl && allowedOrigin.includes(originUrl));
     if ((originUrl && allowedOrigin.includes(originUrl)) || !originUrl) {
       callback(null, true);
     } else {
