@@ -1,6 +1,7 @@
 import { CorsOptions } from "cors";
 
 import databaseClient from "@/config/database";
+import rateLimit from 'express-rate-limit';
 
 const port = process.env.PORT || 8080;
 const baseUrl = process.env.BASE_URL || `http://localhost:${port}`;
@@ -18,11 +19,16 @@ const corsOptions: CorsOptions = {
   methods: ['GET', 'POST'],
   optionsSuccessStatus: 200
 };
+const apiAccessRateLimit = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100 // Limit each IP to 1000 requests per windowMs
+});
 
 export {
   port,
   baseUrl,
   allowedOrigin,
   corsOptions,
-  databaseClient
+  databaseClient,
+  apiAccessRateLimit
 }

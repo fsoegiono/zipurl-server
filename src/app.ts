@@ -1,15 +1,16 @@
-import express, { Express } from 'express';
+import express, { Express, json } from 'express';
 import helmet from 'helmet';
 import cors from 'cors';
 
-import { corsOptions } from '@/config';
+import { corsOptions, apiAccessRateLimit } from '@/config';
 import { shortenUrlRoutes, redirectShortUrlRoutes } from '@/api/v1/routes';
 
-const app = express();
+const app: Express = express();
 
 app.use(helmet()); // mitigate some well-known web vulnerabilities
+app.use(apiAccessRateLimit);
 app.use(cors(corsOptions));
-app.use(express.json());
+app.use(json({ limit: '100kb' }));
 
 app.use('/', redirectShortUrlRoutes);
 app.use('/api/v1', shortenUrlRoutes);
