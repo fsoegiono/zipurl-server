@@ -15,7 +15,7 @@ describe('Redirect Short URL Controller', () => {
     jest.clearAllMocks();
   });
 
-  it('should redirect to the long URL when valid short code is provided', async () => {
+  it('should redirect to long URL when valid short code is provided', async () => {
     const longUrl = 'https://www.example.com';
     const shortCode = 'a1b2c3';
 
@@ -27,7 +27,7 @@ describe('Redirect Short URL Controller', () => {
     expect(response).toEqual({ status: 200, url: 'https://www.example.com' });
   });
 
-  it('should return error when the short code is not found', async () => {
+  it('should return error when short code is not found', async () => {
     const shortCode = 'invalid-url';
 
     (getLongUrl as jest.Mock).mockResolvedValue(null);
@@ -38,7 +38,7 @@ describe('Redirect Short URL Controller', () => {
     expect(response).toEqual({ status: 404, error: 'URL not found' });
   });
 
-  it('should return error when an internal server error occurs', async () => {
+  it('should return error when internal server error occurs', async () => {
     const shortCode = 'a1b2c3';
 
     (getLongUrl as jest.Mock).mockRejectedValue(new Error('Database error'));
