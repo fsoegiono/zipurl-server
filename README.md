@@ -51,9 +51,9 @@ The server will start on http://localhost:8080.
 
 ## Environments
 
-- `MONGODB_URI`: MongoDB URI connection string
+- `MONGODB_URI`: MongoDB URI connection string (e.g. `mongodb://mongodb:27017`)
 - `PORT`: Sever port number 8080
-- `ALLOWED_ORIGIN`: Comma-separated list of allowed origins for CORS (i.e. `https://www.example1.com,https://www.exampl2.com`)
+- `ALLOWED_ORIGIN`: Comma-separated list of allowed origins for CORS (e.g. `https://www.example1.com,https://www.exampl2.com`)
 - `BASE_URL`: Server base URL
 
 ## Available Scripts

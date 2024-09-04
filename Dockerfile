@@ -26,4 +26,4 @@ RUN npm prune --production
 EXPOSE 8080
 
 # Start the server
-CMD ["node", "dist/server.js"]
+CMD ["npm", "start"]
