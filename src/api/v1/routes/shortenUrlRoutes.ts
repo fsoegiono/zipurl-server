@@ -9,8 +9,8 @@ router.post('/shorten', async (req: Request<{}, {}, ShortenUrlBodyRequest>, res:
   const { body: { longUrl }} = req;
   const { status, error, shortUrl } = await shortenUrlController(longUrl);
 
-  if (error) res.status(status).json({ error });
-  res.json({ shortUrl });
+  if (error) return res.status(status).json({ error });
+  return res.json({ shortUrl });
 });
 
 export default router;

@@ -6,6 +6,7 @@ import rateLimit from 'express-rate-limit';
 const port = process.env.PORT || 8080;
 const baseUrl = process.env.BASE_URL || `http://localhost:${port}`;
 const allowedOrigin = process.env.ALLOWED_ORIGIN || 'http://localhost:3000,';
+const clientURL = process.env.CLIENT_URL;
 const corsOptions: CorsOptions = {
   origin: (originUrl, callback) => {
     // Check if the request origin matches the allowed origin
@@ -30,5 +31,6 @@ export {
   allowedOrigin,
   corsOptions,
   databaseClient,
-  apiAccessRateLimit
+  apiAccessRateLimit,
+  clientURL
 }

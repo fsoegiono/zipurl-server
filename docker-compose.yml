@@ -10,6 +10,7 @@ services:
       - PORT=${PORT}
       - BASE_URL=${BASE_URL}
       - ALLOWED_ORIGIN=${ALLOWED_ORIGIN}
+      - CLIENT_URL=${CLIENT_URL}
     depends_on:
       - mongodb
 

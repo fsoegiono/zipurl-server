@@ -39,7 +39,7 @@ Ensure you have the following installed:
 2. Run the container:
 
    ```
-   MONGODB_URI=mongodb://mongodb:27017 PORT=8080 BASE_URL=http://localhost:8080 ALLOWED_ORIGIN=http://localhost:3000 docker-compose up
+   MONGODB_URI=mongodb://mongodb:27017 PORT=8080 BASE_URL=http://localhost:8080 ALLOWED_ORIGIN=http://localhost:3000 CLIENT_URL=http://localhost:3000 docker-compose up
    ```
 
 The server will start on http://localhost:8080.
