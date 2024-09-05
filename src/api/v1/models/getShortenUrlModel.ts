@@ -21,11 +21,9 @@ const getLongUrl = async (shortCode: string): Promise<UrlSchema | null>  => {
 }
 
 const getShortUrlCode = async (longUrl: string): Promise<UrlSchema | null> => {
-  const cachedShortCode = cache.get<UrlSchema>(longUrl);
+  const cachedShortCode = await cache.get<UrlSchema>(longUrl);
 
-  if (cachedShortCode) {
-    return cachedShortCode;
-  }
+  if (cachedShortCode) return cachedShortCode;
 
   const responseShortCode = db.findOneAndUpdate(
     { longUrl },
@@ -35,7 +33,6 @@ const getShortUrlCode = async (longUrl: string): Promise<UrlSchema | null> => {
   );
 
   if (responseShortCode) cache.set(longUrl, responseShortCode);
-
   return responseShortCode;
 }
 
