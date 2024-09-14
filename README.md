@@ -13,10 +13,6 @@ This repository works with URL shortener client, built with Next.js. Follow inst
 - CI/CD pipeline using GitHub Actions
 - Deployed on AWS App Runner
 
-## Live Web Application
-
-Zipurl server is available online. You can find it here: https://h5mpnxcp5x.us-west-2.awsapprunner.com.
-
 ## Prerequisites
 
 Ensure you have the following installed:
